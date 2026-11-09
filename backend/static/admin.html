@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ViralRank · Admin</title>
+<link rel="stylesheet" href="/static/css/theme.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="shell">
+  <aside class="side" id="side">
+    <div class="brand">
+      <div class="logo">A</div>
+      <div><b>ViralRank</b><br><span>admin console</span></div>
+    </div>
+    <div class="nav-group">Admin</div>
+    <div class="nav-item" data-meta="overview"><span class="ico">◈</span> Overview</div>
+    <div class="nav-item" data-meta="users"><span class="ico">⌗</span> Pengguna</div>
+    <div class="nav-item" data-meta="apisettings"><span class="ico">⇄</span> Konfigurasi API</div>
+    <div class="nav-item" data-meta="audit"><span class="ico">☰</span> Audit log</div>
+    <div class="nav-item" data-meta="snapshots"><span class="ico">▤</span> Snapshot</div>
+    <div class="nav-group">Akun</div>
+    <div class="nav-item" id="navApp"><span class="ico">▸</span> Ke aplikasi</div>
+    <div class="nav-item" id="navOut"><span class="ico">⏻</span> Keluar</div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <button class="ghost sm mobile-only" onclick="document.getElementById('side').classList.toggle('open')">☰</button>
+      <h2 id="pageTitle">Overview</h2>
+      <div class="row right tight"><span class="pill" id="adminPill">—</span></div>
+    </div>
+    <div class="content" id="page"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="/static/js/api.js"></script>
+<script src="/static/js/admin.js"></script>
+</body>
+</html>

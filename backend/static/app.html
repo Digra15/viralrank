@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ViralRank · Dashboard</title>
+<link rel="stylesheet" href="/static/css/theme.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="shell">
+  <aside class="side" id="side">
+    <div class="brand">
+      <div class="logo">V</div>
+      <div><b>ViralRank</b><br><span>product radar</span></div>
+    </div>
+
+    <div class="nav-group">Riset</div>
+    <div class="nav-item" data-view="dashboard"><span class="ico">◈</span> Dashboard</div>
+    <div class="nav-item" data-view="ads"><span class="ico">▤</span> Top Ads</div>
+    <div class="nav-item" data-view="radar"><span class="ico">◎</span> Product Radar</div>
+    <div class="nav-item" data-view="brands"><span class="ico">⌗</span> Brand Lab</div>
+    <div class="nav-item" data-view="trends"><span class="ico">↗</span> Trend Radar</div>
+
+    <div class="nav-group">Workspace</div>
+    <div class="nav-item" data-view="favorites"><span class="ico">★</span> Favorit <span class="badge" id="badgeFav">0</span></div>
+    <div class="nav-item" data-view="alerts"><span class="ico">⚑</span> Alert</div>
+    <div class="nav-item" data-view="ai"><span class="ico">✦</span> AI Studio</div>
+    <div class="nav-item" data-view="export"><span class="ico">⤓</span> Export</div>
+
+    <div class="nav-group">Akun</div>
+    <div class="nav-item" data-view="settings"><span class="ico">⚙</span> Pengaturan</div>
+    <div class="nav-item" data-view="keys"><span class="ico">⌘</span> API Key</div>
+    <div class="nav-item" id="navAdmin" style="display:none"><span class="ico">⛨</span> Admin Panel</div>
+    <div class="nav-item" id="navOut"><span class="ico">⏻</span> Keluar</div>
+
+    <div class="tiny dim" style="margin-top:auto;padding:10px 8px" id="sideFoot">—</div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <button class="ghost sm mobile-only" onclick="document.getElementById('side').classList.toggle('open')">☰</button>
+      <h2 id="viewTitle">Dashboard</h2>
+      <div class="row right tight">
+        <span class="pill" id="livePill"><span class="dot"></span> live</span>
+        <span class="pill" id="userPill">—</span>
+      </div>
+    </div>
+    <div class="content" id="view"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="/static/js/api.js"></script>
+<script src="/static/js/app.js"></script>
+</body>
+</html>

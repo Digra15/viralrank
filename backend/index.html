@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ViralRank — TikTok Shop Affiliate Research</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body{background:radial-gradient(circle at 20% 0%,#1b1035 0%,#0a0a12 45%,#050509 100%);min-height:100vh}
+  .glass{background:rgba(255,255,255,.045);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.09)}
+  .card:hover{transform:translateY(-3px);border-color:rgba(139,92,246,.55)}
+  .card{transition:.18s ease}
+  .tab.active{background:linear-gradient(135deg,#7c3aed,#db2777);color:#fff}
+  ::-webkit-scrollbar{width:9px}::-webkit-scrollbar-thumb{background:#3b2b5c;border-radius:8px}
+  .clamp2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+</style>
+</head>
+<body class="text-slate-200 font-sans">
+
+<header class="max-w-7xl mx-auto px-4 pt-7 pb-3">
+  <div class="flex items-center justify-between flex-wrap gap-3">
+    <div>
+      <h1 class="text-2xl font-bold tracking-tight">Viral<span class="text-violet-400">Rank</span></h1>
+      <p class="text-xs text-slate-500 mt-0.5">TikTok Shop affiliate research · Creative Center + AI</p>
+    </div>
+    <div class="flex gap-2 text-xs">
+      <button id="tab-ads" class="tab active px-3 py-1.5 rounded-lg glass">Top Ads</button>
+      <button id="tab-products" class="tab px-3 py-1.5 rounded-lg glass">Product Research</button>
+      <button id="tab-ai" class="tab px-3 py-1.5 rounded-lg glass">AI Insight</button>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 pb-16">
+
+  <!-- ============ TOP ADS ============ -->
+  <section id="view-ads">
+    <div class="glass rounded-2xl p-4 mt-2 flex flex-wrap gap-3 items-end">
+      <label class="text-xs text-slate-400">Period
+        <select id="f-period" class="block mt-1 bg-slate-900/70 border border-white/10 rounded-lg px-2 py-1.5 text-sm">
+          <option value="7" selected>7 hari</option><option value="30">30 hari</option>
+          <option value="1">1 hari</option><option value="120">120 hari</option>
+        </select>
+      </label>
+      <label class="text-xs text-slate-400">Region
+        <select id="f-region" class="block mt-1 bg-slate-900/70 border border-white/10 rounded-lg px-2 py-1.5 text-sm">
+          <option value="ID" selected>Indonesia</option><option value="US">US</option>
+          <option value="MY">Malaysia</option><option value="TH">Thailand</option>
+          <option value="VN">Vietnam</option><option value="PH">Philippines</option>
+        </select>
+      </label>
+      <label class="text-xs text-slate-400">Urutkan
+        <select id="f-order" class="block mt-1 bg-slate-900/70 border border-white/10 rounded-lg px-2 py-1.5 text-sm">
+          <option value="ctr" selected>CTR</option><option value="like">Likes</option><option value="cost">Spend</option>
+        </select>
+      </label>
+      <label class="text-xs text-slate-400">Limit
+        <select id="f-limit" class="block mt-1 bg-slate-900/70 border border-white/10 rounded-lg px-2 py-1.5 text-sm">
+          <option>10</option><option selected>20</option><option>30</option>
+        </select>
+      </label>
+      <label class="text-xs text-slate-400 flex-1 min-w-[160px]">Keyword
+        <input id="f-keyword" placeholder="skincare, jam, ..." class="block mt-1 w-full bg-slate-900/70 border border-white/10 rounded-lg px-2 py-1.5 text-sm" />
+      </label>
+      <label class="flex items-center gap-2 text-xs text-slate-300 pb-2">
+        <input id="f-onlyps" type="checkbox" class="accent-violet-500" /> Product Sales only
+      </label>
+      <button id="btn-load" class="px-4 py-2 rounded-lg bg-gradient-to-r from-violet-600 to-pink-600 text-sm font-semibold">Muat</button>
+      <button id="btn-csv" class="px-3 py-2 rounded-lg glass text-sm">Export CSV</button>
+    </div>
+
+    <div id="stats" class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3 hidden"></div>
+    <p id="status-text" class="text-xs text-slate-500 mt-3">Memuat…</p>
+    <div id="ads-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-3"></div>
+  </section>
+
+  <!-- ============ PRODUCTS ============ -->
+  <section id="view-products" class="hidden">
+    <div class="glass rounded-2xl p-4 mt-2">
+      <h2 class="text-sm font-semibold mb-1">Product Research — TikTok Shop API</h2>
+      <p class="text-xs text-slate-500 mb-3">Butuh kredensial Partner Center (<code>TTS_APP_KEY</code>, <code>TTS_APP_SECRET</code>) untuk data penjualan asli. Tanpa itu, pakai tab Top Ads.</p>
+      <div class="flex flex-wrap gap-3 items-end">
+        <label class="text-xs text-slate-400 flex-1 min-w-[200px]">Keyword produk
+          <input id="p-keyword" placeholder="serum vitamin c" class="block mt-1 w-full bg-slate-900/70 border border-white/10 rounded-lg px-2 py-1.5 text-sm" />
+        </label>
+        <button id="btn-products" class="px-4 py-2 rounded-lg bg-gradient-to-r from-violet-600 to-pink-600 text-sm font-semibold">Cari Produk</button>
+      </div>
+      <p id="product-status" class="text-xs text-slate-500 mt-3"></p>
+      <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-3"></div>
+    </div>
+  </section>
+
+  <!-- ============ AI ============ -->
+  <section id="view-ai" class="hidden">
+    <div class="glass rounded-2xl p-4 mt-2">
+      <div class="flex items-center justify-between flex-wrap gap-2">
+        <div>
+          <h2 class="text-sm font-semibold">AI Insight</h2>
+          <p class="text-xs text-slate-500">Provider <code>ag</code> · Claude · via 9Router</p>
+        </div>
+        <div class="flex gap-2">
+          <select id="ai-model" class="bg-slate-900/70 border border-white/10 rounded-lg px-2 py-1.5 text-xs"></select>
+          <button id="btn-ai" class="px-4 py-2 rounded-lg bg-gradient-to-r from-violet-600 to-pink-600 text-sm font-semibold">Analisis</button>
+        </div>
+      </div>
+      <p id="ai-status" class="text-xs text-slate-500 mt-3">Muat data Top Ads dulu, lalu tekan Analisis.</p>
+      <pre id="ai-output" class="hidden whitespace-pre-wrap text-[13px] leading-relaxed bg-black/30 border border-white/10 rounded-xl p-4 mt-3"></pre>
+    </div>
+  </section>
+</main>
+
+<script>
+const $ = s => document.querySelector(s);
+let ADS = [], META = {region:'ID', period:7};
+
+// ---------- tabs ----------
+['ads','products','ai'].forEach(t=>{
+  $('#tab-'+t).onclick = ()=>{
+    ['ads','products','ai'].forEach(x=>{
+      $('#view-'+x).classList.toggle('hidden', x!==t);
+      $('#tab-'+x).classList.toggle('active', x===t);
+    });
+  };
+});
+
+// ---------- ads ----------
+async function loadAds(){
+  const p = new URLSearchParams({
+    period: $('#f-period').value, region: $('#f-region').value,
+    order_by: $('#f-order').value, limit: $('#f-limit').value, page: 1,
+  });
+  const kw = $('#f-keyword').value.trim();
+  if (kw) p.set('keyword', kw);
+  const onlyPs = $('#f-onlyps').checked;
+  $('#status-text').textContent = 'Memuat…';
+  $('#ads-grid').innerHTML = '';
+  try{
+    const r = await fetch('/api/ads?' + p);
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.detail || ('HTTP '+r.status));
+    let items = d.items || [];
+    if (onlyPs) items = items.filter(a => a.product_sales);
+    ADS = items;
+    META = {region: $('#f-region').value, period: +$('#f-period').value};
+    renderAds(items);
+    $('#status-text').textContent = `${items.length} ads live · ${d.source}${onlyPs?' · filtered product_sales':''}`;
+  }catch(e){
+    $('#status-text').textContent = 'Error: ' + e.message;
+  }
+}
+
+function fmt(n){ return (n??0).toLocaleString('id-ID'); }
+
+function renderAds(items){
+  const grid = $('#ads-grid');
+  if (!items.length){ $('#stats').classList.add('hidden'); grid.innerHTML = '<p class="text-xs text-slate-500">Tidak ada data.</p>'; return; }
+  const avgCtr = items.reduce((s,a)=>s+(a.ctr||0),0)/items.length;
+  const likes = items.reduce((s,a)=>s+(a.likes||0),0);
+  const ps = items.filter(a=>a.product_sales).length;
+  $('#stats').classList.remove('hidden');
+  $('#stats').innerHTML = [
+    ['Total Ads', items.length], ['Avg CTR', avgCtr.toFixed(2)+'%'],
+    ['Total Likes', fmt(likes)], ['Product Sales', ps]
+  ].map(([k,v])=>`<div class="glass rounded-xl px-3 py-2">
+      <div class="text-[10px] uppercase tracking-wider text-slate-500">${k}</div>
+      <div class="text-lg font-semibold">${v}</div></div>`).join('');
+
+  grid.innerHTML = items.map(a=>`
+    <article class="card glass rounded-xl overflow-hidden flex flex-col">
+      <div class="relative aspect-[9/13] bg-slate-900">
+        ${a.cover ? `<img src="${a.cover}" loading="lazy" class="w-full h-full object-cover" onerror="this.style.display='none'">` : ''}
+        <span class="absolute top-2 left-2 text-[10px] px-1.5 py-0.5 rounded bg-black/70">${a.duration?Math.floor(a.duration/1000||a.duration)+'s':'—'}</span>
+        ${a.product_sales?'<span class="absolute top-2 right-2 text-[10px] px-1.5 py-0.5 rounded bg-pink-600/90">PS</span>':''}
+      </div>
+      <div class="p-3 flex-1 flex flex-col gap-1.5">
+        <h3 class="text-[13px] font-medium clamp2 leading-snug">${a.title || '(tanpa judul)'}</h3>
+        <p class="text-[11px] text-slate-500">${a.brand || '—'}</p>
+        <div class="mt-auto flex items-center justify-between text-[11px] pt-1.5 border-t border-white/5">
+          <span class="text-emerald-400">CTR ${(a.ctr||0).toFixed(2)}%</span>
+          <span class="text-slate-400">♥ ${fmt(a.likes)}</span>
+        </div>
+        <p class="text-[10px] text-slate-600 truncate">${a.industry || ''}</p>
+      </div>
+    </article>`).join('');
+}
+
+$('#btn-load').onclick = loadAds;
+$('#f-onlyps').onchange = () => renderAds($('#f-onlyps').checked ? ADS.filter(a=>a.product_sales) : ADS);
+
+$('#btn-csv').onclick = () => {
+  if (!ADS.length) return;
+  const cols = ['ad_id','title','brand','ctr','likes','cost','industry','duration','product_sales','cover'];
+  const esc = v => `"${String(v??'').replace(/"/g,'""')}"`;
+  const csv = [cols.join(',')].concat(ADS.map(a=>cols.map(c=>esc(a[c])).join(','))).join('\n');
+  const url = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  const a = document.createElement('a');
+  a.href = url; a.download = `viralrank_${META.region}_${META.period}d.csv`; a.click();
+  URL.revokeObjectURL(url);
+};
+
+// ---------- products ----------
+$('#btn-products').onclick = async () => {
+  const kw = $('#p-keyword').value.trim();
+  $('#product-status').textContent = 'Memuat…';
+  $('#products-grid').innerHTML = '';
+  try{
+    const r = await fetch('/api/tiktok/shop/products?' + new URLSearchParams(kw?{keyword:kw}:{}));
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.detail || ('HTTP '+r.status));
+    const list = (d.data && (d.data.products || d.data.product_list || [])) || [];
+    $('#product-status').textContent = `${list.length} produk`;
+    $('#products-grid').innerHTML = list.map(p=>`
+      <div class="glass rounded-xl p-3">
+        <h3 class="text-[13px] font-medium clamp2">${p.title || p.product_name || '(no title)'}</h3>
+        <p class="text-[11px] text-slate-500 mt-1">ID: ${p.id || p.product_id || '—'}</p>
+        <p class="text-[11px] text-emerald-400 mt-1">${p.price ? (p.price.sale_price || p.price.original_price) : '—'}</p>
+      </div>`).join('') || '<p class="text-xs text-slate-500">Kosong.</p>';
+  }catch(e){
+    $('#product-status').textContent = 'Error: ' + e.message;
+  }
+};
+
+// ---------- AI ----------
+(async function initModels(){
+  try{
+    const d = await (await fetch('/api/ai/models')).json();
+    $('#ai-model').innerHTML = (d.models||[]).map(m=>`<option>${m}</option>`).join('');
+    if (!d.key_present) $('#ai-status').textContent = 'API key 9Router belum ada — isi NINE_ROUTER_KEY di .env';
+  }catch(e){ /* offline */ }
+})();
+
+$('#btn-ai').onclick = async () => {
+  if (!ADS.length){ $('#ai-status').textContent = 'Muat Top Ads dulu.'; return; }
+  $('#ai-status').textContent = 'Claude lagi mikir…';
+  $('#ai-output').classList.add('hidden');
+  try{
+    const r = await fetch('/api/ai/analyze', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ads: ADS, region: META.region, period: META.period, model: $('#ai-model').value})
+    });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.detail || ('HTTP '+r.status));
+    $('#ai-output').textContent = d.text;
+    $('#ai-output').classList.remove('hidden');
+    $('#ai-status').textContent = `${d.model}${d.cached?' · cache':''}`;
+  }catch(e){
+    $('#ai-status').textContent = 'Error: ' + e.message;
+  }
+};
+
+loadAds();
+</script>
+</body>
+</html>

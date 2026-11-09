@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ViralRank — Riset Produk Viral TikTok Shop</title>
+<meta name="description" content="Temukan produk viral TikTok Shop lebih awal. Data live Creative Center, skor momentum, brand lab, dan export CSV.">
+<link rel="stylesheet" href="/static/css/theme.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="land">
+  <div class="topnav">
+    <div class="brand" style="padding:0">
+      <div class="logo">V</div>
+      <div><b>ViralRank</b><br><span>product radar</span></div>
+    </div>
+    <div class="links right">
+      <a href="#fitur">Fitur</a>
+      <a href="#cara">Cara kerja</a>
+      <a href="#harga">Akses</a>
+      <a href="/admin">Admin</a>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div>
+      <span class="pill acc"><span class="dot"></span> Live Creative Center · region ID</span>
+      <h1 style="margin-top:16px">Temukan produk viral<br><em>sebelum</em> jadi rebutan.</h1>
+      <p class="lead">ViralRank memantau iklan TikTok yang sedang naik di Indonesia, menghitung skor momentum per brand dan industri, lalu menyusun shortlist produk untuk konten afiliasi kamu. Tanpa API key, tanpa captcha.</p>
+      <div class="row" style="margin-top:22px">
+        <button class="primary" onclick="document.getElementById('auth').scrollIntoView({behavior:'smooth'})">Mulai gratis</button>
+        <a class="btn" href="/app">Buka dashboard</a>
+      </div>
+      <div class="row" style="margin-top:26px;gap:26px">
+        <div class="kpi"><span class="label">Sumber data</span><span class="value" style="font-size:18px">Creative Center</span></div>
+        <div class="kpi"><span class="label">Refresh</span><span class="value" style="font-size:18px">15 menit</span></div>
+        <div class="kpi"><span class="label">Biaya</span><span class="value" style="font-size:18px">Rp 0</span></div>
+      </div>
+    </div>
+
+    <div class="authcard" id="auth">
+      <div class="tabs" style="margin-bottom:16px">
+        <button id="tabLogin" class="on" onclick="setTab('login')">Masuk</button>
+        <button id="tabReg" onclick="setTab('reg')">Daftar</button>
+      </div>
+
+      <form id="formLogin" onsubmit="doLogin(event)" style="display:flex;flex-direction:column;gap:12px">
+        <label class="field">Username<input id="loginUser" autocomplete="username" placeholder="nama_kamu" required></label>
+        <label class="field">Password<input id="loginPass" type="password" autocomplete="current-password" placeholder="••••••••" required></label>
+        <button class="primary" type="submit" id="loginBtn">Masuk ke dashboard</button>
+        <div id="loginMsg" class="small" style="color:var(--err);min-height:16px"></div>
+      </form>
+
+      <form id="formReg" class="hide" onsubmit="doRegister(event)" style="display:flex;flex-direction:column;gap:12px">
+        <label class="field">Username<input id="regUser" minlength="3" placeholder="min. 3 karakter" required></label>
+        <label class="field">Password<input id="regPass" type="password" minlength="4" placeholder="min. 4 karakter" required></label>
+        <button class="primary" type="submit" id="regBtn">Buat akun</button>
+        <div id="regMsg" class="small" style="color:var(--err);min-height:16px"></div>
+      </form>
+
+      <div class="tiny dim" style="margin-top:14px;line-height:1.6">
+        Akun admin default: <code>admin</code> / password dari env <code>ADMIN_PASSWORD</code> (fallback <code>admin123</code>). Ganti setelah login pertama.
+      </div>
+    </div>
+  </section>
+
+  <section id="fitur" style="margin-top:34px">
+    <div class="row spread" style="margin-bottom:14px">
+      <h2>Yang bisa kamu lakukan</h2>
+      <span class="pill">7 modul</span>
+    </div>
+    <div class="grid g3">
+      <div class="card feature"><span class="n">01 · TOP ADS</span><h3>Pantau iklan paling efektif</h3><p class="small muted">Filter periode 1–180 hari, urutkan berdasarkan CTR atau likes, lihat video dan cover aslinya.</p></div>
+      <div class="card feature"><span class="n">02 · PRODUCT RADAR</span><h3>Shortlist produk potensial</h3><p class="small muted">Filter otomatis iklan berkategori product sales, hitung skor momentum, simpan ke favorit.</p></div>
+      <div class="card feature"><span class="n">03 · BRAND LAB</span><h3>Brand mana yang sedang agresif</h3><p class="small muted">Agregasi jumlah iklan, rata-rata CTR, dan total likes per brand dalam satu periode.</p></div>
+      <div class="card feature"><span class="n">04 · TREND RADAR</span><h3>Rotasi industri &amp; hashtag</h3><p class="small muted">Lihat hashtag yang dipakai berulang dan industri yang menaikkan belanja iklan.</p></div>
+      <div class="card feature"><span class="n">05 · AI STUDIO</span><h3>Analisis cepat pakai LLM</h3><p class="small muted">Rangkum peluang, hook, dan sudut konten dari set iklan aktif lewat gateway AI yang dikonfigurasi admin.</p></div>
+      <div class="card feature"><span class="n">06 · EXPORT</span><h3>Bawa data ke sheet kamu</h3><p class="small muted">CSV siap tempel ke Google Sheets untuk tracking harian dan perbandingan antar periode.</p></div>
+    </div>
+  </section>
+
+  <section id="cara" style="margin-top:36px" class="card pad-lg">
+    <h2>Alur kerja</h2>
+    <div class="grid g3" style="margin-top:14px">
+      <div class="feature"><b>1 · Tarik data</b><p class="small muted">Server memanggil Creative Center dengan header browser asli, menyimpan hasil ke cache SQLite 15 menit.</p></div>
+      <div class="feature"><b>2 · Skor &amp; agregasi</b><p class="small muted">CTR, likes, dan jumlah iklan per brand digabung jadi momentum score yang bisa diurutkan.</p></div>
+      <div class="feature"><b>3 · Eksekusi</b><p class="small muted">Simpan kandidat ke favorit, atur alert ambang CTR, export CSV, lalu produksi konten.</p></div>
+    </div>
+  </section>
+
+  <section id="harga" style="margin-top:36px" class="grid g2">
+    <div class="card pad-lg">
+      <h3>Akses personal</h3>
+      <p class="small muted" style="margin:8px 0 14px">Semua modul, data live, export CSV, 1 akun.</p>
+      <div class="num" style="font-size:30px">Gratis</div>
+      <ul class="small muted" style="margin:12px 0 0;padding-left:18px;line-height:1.8">
+        <li>Dashboard &amp; Top Ads live</li>
+        <li>Brand Lab + Trend Radar</li>
+        <li>Favorit, alert, catatan</li>
+      </ul>
+    </div>
+    <div class="card pad-lg">
+      <h3>Akses tim</h3>
+      <p class="small muted" style="margin:8px 0 14px">Dibuat oleh admin, kuota dan API key terpisah.</p>
+      <div class="num" style="font-size:30px">By request</div>
+      <ul class="small muted" style="margin:12px 0 0;padding-left:18px;line-height:1.8">
+        <li>Multi-user + role admin</li>
+        <li>API key per akun</li>
+        <li>Integrasi FastMoss / TikTok Shop (butuh kredensial)</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="land-foot">
+    <span>ViralRank · data dari TikTok Creative Center (publik). Bukan afiliasi TikTok.</span>
+    <span class="mono"><a href="/app">/app</a> · <a href="/docs">/docs</a> · <a href="/admin">/admin</a></span>
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+<script>
+const $ = (id) => document.getElementById(id);
+function toast(msg, kind) {
+  const d = document.createElement('div');
+  d.className = kind || '';
+  d.textContent = msg;
+  $('toast').appendChild(d);
+  setTimeout(() => d.remove(), 4200);
+}
+function setTab(t) {
+  const login = t === 'login';
+  $('tabLogin').classList.toggle('on', login);
+  $('tabReg').classList.toggle('on', !login);
+  $('formLogin').classList.toggle('hide', !login);
+  $('formReg').classList.toggle('hide', login);
+}
+async function post(url, body) {
+  const r = await fetch(url, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)});
+  return r.json();
+}
+async function doLogin(e) {
+  e.preventDefault();
+  const btn = $('loginBtn');
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span> memeriksa…';
+  try {
+    const d = await post('/api/auth/login', {username: $('loginUser').value.trim(), password: $('loginPass').value});
+    if (d.code === 0) {
+      localStorage.setItem('vr_token', d.token);
+      localStorage.setItem('vr_user', JSON.stringify({id: d.user_id, role: d.role}));
+      location.href = d.role === 'admin' ? '/admin' : '/app';
+    } else {
+      $('loginMsg').textContent = d.message || 'Login gagal';
+    }
+  } catch (err) {
+    $('loginMsg').textContent = 'Server tidak merespons: ' + err.message;
+  } finally {
+    btn.disabled = false; btn.textContent = 'Masuk ke dashboard';
+  }
+}
+async function doRegister(e) {
+  e.preventDefault();
+  const btn = $('regBtn');
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span> membuat…';
+  try {
+    const d = await post('/api/auth/register', {username: $('regUser').value.trim(), password: $('regPass').value});
+    if (d.code === 0) {
+      toast('Akun dibuat. Silakan masuk.', 'ok');
+      $('loginUser').value = $('regUser').value.trim();
+      setTab('login');
+      $('loginPass').focus();
+    } else {
+      $('regMsg').textContent = d.message || 'Gagal daftar';
+    }
+  } catch (err) {
+    $('regMsg').textContent = 'Server tidak merespons: ' + err.message;
+  } finally {
+    btn.disabled = false; btn.textContent = 'Buat akun';
+  }
+}
+// already logged in -> straight to app
+const t = localStorage.getItem('vr_token');
+if (t) {
+  fetch('/api/auth/me', {headers: {Authorization: 'Bearer ' + t}})
+    .then(r => r.json()).then(d => { if (d.code === 0) location.href = d.user.role === 'admin' ? '/admin' : '/app'; })
+    .catch(() => {});
+}
+</script>
+</body>
+</html>
